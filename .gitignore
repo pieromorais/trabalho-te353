@@ -1,0 +1,6 @@
+# Essa file serve para o git ignorar arquivos
+# que não precisam ser acompanhados
+# Notadamente para esse projeto em C++ .o,.d e .exe files
+*.o
+*.d
+*.exe
