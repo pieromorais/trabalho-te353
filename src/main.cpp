@@ -8,9 +8,14 @@ Piero
 Vinícius*/
 
 #include<iostream>
+#include"ClasseExample.h"
 
 int main(int argc, char* argv[]){
-    std::cout << "Loja de informatica" << "\n";
+    
+    ClasseExample exemplo;
 
+    std::cout << "Loja de informatica" << "\n";
+    exemplo.alguma_funcao();
+    
     return 0;
 }
