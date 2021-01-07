@@ -5,7 +5,7 @@ Página do github para colaboração para desenvolver o trabalho de programaçã
 
 Loja de informática em programação C++ com os paradigmas de orientação à objetos.
 
-Os arquivos das classes devem ser todos colocados dentro da pasta <strong>src<\strong>
+Os arquivos das classes devem ser todos colocados dentro da pasta <strong>src</strong>
  
 Quando for alterar os arquivos, crie um novo branch (ramo) e peça um pull request (PR).
 O ramo principal (main) deve continuar sempre funcionado e vai ser nossa referência,
