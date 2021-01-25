@@ -8,25 +8,18 @@ Piero
 Vinícius*/
 
 #include<iostream>
+
 #include "File.h"
+#include "Utilities.h"
+
 int main(int argc, char* argv[]){
     
     bool menu = false;
+    Utilities utils;
 
     while(!menu){
         File file("db.csv");
-        int option = 0;
-        std::cout << "sair?\n1 - sim\n2 - nao\n";
-        std::cin >> option;
-        switch (option)
-        {
-        case 1:
-            menu = true;
-            break;
-        
-        default:
-            break;
-        }
+        menu = utils.make_menu();
     }
     
     return 0;
