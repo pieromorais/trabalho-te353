@@ -8,14 +8,26 @@ Piero
 Vinícius*/
 
 #include<iostream>
-#include"ClasseExample.h"
-
+#include "File.h"
 int main(int argc, char* argv[]){
     
-    ClasseExample exemplo;
+    bool menu = false;
 
-    std::cout << "Loja de informatica" << "\n";
-    exemplo.alguma_funcao();
+    while(!menu){
+        File file("db.csv");
+        int option = 0;
+        std::cout << "sair?\n1 - sim\n2 - nao\n";
+        std::cin >> option;
+        switch (option)
+        {
+        case 1:
+            menu = true;
+            break;
+        
+        default:
+            break;
+        }
+    }
     
     return 0;
 }
