@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+File::File(){}
 
 File::File(std::string address)
 {

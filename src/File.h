@@ -17,6 +17,7 @@ class File
     This class will be the parent for the other ones that will handle
     reading and writing and other stuff.*/
 public:
+    File();
     File(std::string address);
     ~File();
 

@@ -14,11 +14,10 @@ Vinícius*/
 
 int main(int argc, char* argv[]){
     
-    bool menu = false;
-    Utilities utils;
+    bool menu = false; // Keep the menu going until true come in.
+    Utilities utils("db.csv"); // Create an object
 
-    while(!menu){
-        File file("db.csv");
+    while(!menu){        
         menu = utils.make_menu();
     }
     
