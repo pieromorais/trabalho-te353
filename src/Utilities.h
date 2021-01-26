@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 #include "File.h"
 
@@ -18,18 +19,24 @@ class Utilities : public File
     methods:
     menu - a simple menu with four options: Ler estoque,
     Adicionar produto, Fazer venda e sair. More features 
-    can be added later, for now this simple menu will work.*/
+    can be added later, for now this simple menu will work.
+    
+    Talvez isso sirva apenas para controle do estoque, sei la.*/
 private:
-    std::ifstream my_file;    
+    std::ifstream my_file;   
+    std::string my_addr; 
 public:
 
     Utilities(std::string addr):File(addr){
         // Here I'm sure that db file exists.
-        my_file.open("db.csv");
+        my_file.open(addr);
+        my_addr = addr;
     };
     ~Utilities();
 
-    void read_file(void);
+    std::vector<std::string> read_file(void); 
+    void print_vector(void);
+    void print_any(void);
     void closing_file(std::ifstream& file);
     void closing_file(std::fstream& file);
 

@@ -14,10 +14,10 @@ File::File(std::string address)
     if(file.fail()){
         // if I can't open the db file, I will create one then.
         file.close();
-        std::ofstream new_file("db.csv");
+        std::ofstream new_file(address);
         // Create a new db file with:
         // id, name, description, qtd, price
-        new_file << "id," << "name," << "desc," << "qtd," << "price" << "\n";
+        new_file << "id," << "name," << "desc," << "qtd," << "price,\0" << "\n";
         new_file.close();
     }   
 }
