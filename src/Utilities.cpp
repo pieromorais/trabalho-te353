@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip> // Permite manipular a saida de dados mais facilmente.
 #include <sstream>
 #include "Utilities.h"
 
@@ -17,7 +18,7 @@ bool Utilities::make_menu(void) {
         switch (option)
         {
         case 1:
-            this->print_vector(); // read the file
+            this->output_from_csv(5); // read the file
             return false; // Maintain the loop.
             break;
         case 2:
@@ -70,21 +71,30 @@ std::vector<std::string> Utilities::read_file(void){
     return result;
 }
 
-void Utilities::print_vector(void){
-    // Para testar
+void Utilities::output_from_csv(size_t num_col){
+    // Esse método pretende criar outputs legais e gerais
+    // que podem ser utilizadas por outras partes do
+    // programa.
+    // Parametros: 
+    //              - num_col: número de colunas para saber onde pular
+    // uma linha. Esse método supõe que os dados são retorna do método
+    // read_file.
     std::vector<std::string> resultado;
-
     resultado = this->read_file();
-    size_t count = 0;
-    for(size_t i = 0; i < resultado.size(); i++){
-        std::cout << resultado[i] << "\t";
-        count++;
-        if (count == 5)
+    size_t counter = 0;
+    for (
+        std::vector<std::string>::iterator iter = resultado.begin(); 
+        iter != resultado.end(); ++iter
+        )
+    {
+        std::cout << *iter << std::setw(30);
+        counter++;
+        if (counter == num_col)
         {
             std::cout << "\n";
-        }
-        
-    }
+            counter = 0;
+        }                
+    }    
 }
 
 void Utilities::print_any(void){

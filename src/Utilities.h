@@ -35,7 +35,7 @@ public:
     ~Utilities();
 
     std::vector<std::string> read_file(void); 
-    void print_vector(void);
+    void output_from_csv(size_t num_col); // recebe o número de colunas
     void print_any(void);
     void closing_file(std::ifstream& file);
     void closing_file(std::fstream& file);
