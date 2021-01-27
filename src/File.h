@@ -18,7 +18,7 @@ class File
     reading and writing and other stuff.*/
 public:
     File();
-    File(std::string address);
+    File(std::string address, size_t num_colunas);
     ~File();
 
     // external methods

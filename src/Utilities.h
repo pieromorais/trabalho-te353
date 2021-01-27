@@ -25,17 +25,20 @@ class Utilities : public File
 private:
     std::ifstream my_file;   
     std::string my_addr; 
+
+    size_t my_numero_colunas; // Isso impede que dois números de colunas sejam criados
 public:
 
-    Utilities(std::string addr):File(addr){
+    Utilities(std::string addr, size_t num_colunas):File(addr, num_colunas){
         // Here I'm sure that db file exists.
         my_file.open(addr);
         my_addr = addr;
+        my_numero_colunas = num_colunas;
     };
     ~Utilities();
 
     std::vector<std::string> read_file(void); 
-    void output_from_csv(size_t num_col); // recebe o número de colunas
+    void output_from_csv(void); // recebe o número de colunas
     void print_any(void);
     void closing_file(std::ifstream& file);
     void closing_file(std::fstream& file);

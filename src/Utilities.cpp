@@ -9,6 +9,9 @@ Utilities::~Utilities()
 
 bool Utilities::make_menu(void) {
     // Simple menu for the our store.
+    // Esse menu vai ter que sair daqui uma hora
+    // ele apenas serve como teste para criação e manipulação
+    // de arquivos.
     int option = 0;
         std::cout << "\n1 - Ler Estoque\n2 - Adicionar Produto\n"
         "3 - Fazer venda\n4 - Sair\n";
@@ -18,7 +21,7 @@ bool Utilities::make_menu(void) {
         switch (option)
         {
         case 1:
-            this->output_from_csv(5); // read the file
+            this->output_from_csv(); // read the file
             return false; // Maintain the loop.
             break;
         case 2:
@@ -71,7 +74,7 @@ std::vector<std::string> Utilities::read_file(void){
     return result;
 }
 
-void Utilities::output_from_csv(size_t num_col){
+void Utilities::output_from_csv(void){
     // Esse método pretende criar outputs legais e gerais
     // que podem ser utilizadas por outras partes do
     // programa.
@@ -89,7 +92,7 @@ void Utilities::output_from_csv(size_t num_col){
     {
         std::cout << *iter << std::setw(30);
         counter++;
-        if (counter == num_col)
+        if (counter == this->my_numero_colunas)
         {
             std::cout << "\n";
             counter = 0;
