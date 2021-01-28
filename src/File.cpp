@@ -5,7 +5,7 @@
 #include<vector>
 File::File(){}
 
-File::File(std::string address, size_t num_colunas)
+File::File(std::string address, size_t num_colunas, std::string nome_tela)
 {   
     
     // Try to open the file
@@ -21,6 +21,7 @@ File::File(std::string address, size_t num_colunas)
         // Isso possibilita usar essa classe como base para outras
         // criando os arquivos que a gente precisar, com o formato
         // específico para cada necessidade que aparecer no código.
+        std::cout << nome_tela << "\n";
         std::string texto;
         std::vector<std::string> nome_das_colunas;
         for (size_t i = 0; i < num_colunas; i++)

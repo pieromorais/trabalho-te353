@@ -28,7 +28,7 @@ private:
     size_t my_numero_colunas; // Isso impede que dois números de colunas sejam criados
 public:
 
-    Utilities(std::string addr, size_t num_colunas):File(addr, num_colunas){
+    Utilities(std::string addr, size_t num_colunas, std::string nome_tela):File(addr, num_colunas, nome_tela){
         // Here I'm sure that db file exists.
         my_addr = addr;
         my_numero_colunas = num_colunas;
