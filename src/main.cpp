@@ -11,6 +11,7 @@ Vinícius*/
 
 #include "File.h"
 #include "Utilities.h"
+#include "Vendas.h"
 
 bool main_menu(void);
 
@@ -37,6 +38,7 @@ bool main_menu(void){
     switch (option)
     {
     case 1:
+        vendas();
         return false; // Maintain the loop.
         break;
     case 2:
