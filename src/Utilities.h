@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <vector>
 
 #include "File.h"
@@ -36,11 +37,12 @@ public:
     ~Utilities();
 
     std::vector<std::string> read_file(void); 
-    void output_from_csv(void); // recebe o número de colunas
+    void output_from_csv(void);
     void adicionar_ao_arquivo(void);
-    void closing_file(std::ifstream& file);
-    void closing_file(std::ofstream& file);
-    void closing_file(std::fstream& file);
+    void venda_de_artigos(void);
 
 };
+
+// Pegeui na internet
+void ClearScreen();
 
