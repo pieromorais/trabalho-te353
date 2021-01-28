@@ -7,36 +7,6 @@ Utilities::~Utilities()
 {
 }
 
-bool Utilities::make_menu(void) {
-    // Simple menu for the our store.
-    // Esse menu vai ter que sair daqui uma hora
-    // ele apenas serve como teste para criação e manipulação
-    // de arquivos.
-    int option = 0;
-        std::cout << "\n1 - Ler Estoque\n2 - Adicionar Produto\n"
-        "3 - Fazer venda\n4 - Sair\n";
-        std::cout << "Opcao: ";
-        std::cin >> option;
-        fflush(stdout);
-        switch (option)
-        {
-        case 1:
-            this->output_from_csv(); // read the file
-            return false; // Maintain the loop.
-            break;
-        case 2:
-            this->adicionar_ao_arquivo();
-            return false;
-            break;
-        case 3:
-            return false;
-            break;
-        default:
-            // Will end if you miss an option.
-            return true; // Get out of the loop.
-            break;
-        }
-}
 
 std::vector<std::string> Utilities::read_file(void){
           

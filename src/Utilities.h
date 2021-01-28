@@ -42,6 +42,5 @@ public:
     void closing_file(std::ofstream& file);
     void closing_file(std::fstream& file);
 
-    bool make_menu(void); // create a menu for us
 };
 
