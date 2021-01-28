@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
         menu = main_menu();
     }
     
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 bool main_menu(void){
