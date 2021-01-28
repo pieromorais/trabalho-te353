@@ -25,7 +25,7 @@ bool Utilities::make_menu(void) {
             return false; // Maintain the loop.
             break;
         case 2:
-            this->print_any();
+            this->adicionar_ao_arquivo();
             return false;
             break;
         case 3:
@@ -70,7 +70,7 @@ std::vector<std::string> Utilities::read_file(void){
         }        
     }    
 
-    this->closing_file(file);
+    file.close();
     return result;
 }
 
@@ -100,8 +100,36 @@ void Utilities::output_from_csv(void){
     }    
 }
 
-void Utilities::print_any(void){
-    std::cout << "hello world" << "\n";
+void Utilities::adicionar_ao_arquivo(void){
+    // Abrir arquivos e adicionar o que user 
+    // quiser - mas será tratado como string
+    //this->output_from_csv();
+
+    std::ofstream file;
+    file.open(this->my_addr, std::ios_base::app);
+
+    if (file.is_open())
+    {
+        std::string nome_coluna;
+        for (size_t i = 0; i < this->my_numero_colunas; i++)
+        {
+            std::cout << "Entre com a coluna " << i << "\n";
+            // só para garantir
+            fflush(stdin);
+            setbuf(stdin, NULL);
+            std::getline(std::cin, nome_coluna);
+            // só para garantir
+            fflush(stdin);
+            setbuf(stdin, NULL);
+            file << nome_coluna << ",";          
+        }
+        file << "\n";
+    }else{
+        // Em tese isso não vai acontecer pq eu forço
+        // a criação de um arquivo caso ele não exista
+        std::cerr << "Ruim\n" ;        
+    }
+     file.close();
 }
 
 void Utilities::closing_file(std::ifstream& file){
@@ -111,5 +139,10 @@ void Utilities::closing_file(std::ifstream& file){
 
 void Utilities::closing_file(std::fstream& file){
     // to close other files
+    file.close();
+}
+
+void Utilities::closing_file(std::ofstream& file){
+    // to close another files
     file.close();
 }

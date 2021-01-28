@@ -22,8 +22,7 @@ class Utilities : public File
     can be added later, for now this simple menu will work.
     
     Talvez isso sirva apenas para controle do estoque, sei la.*/
-private:
-    std::ifstream my_file;   
+private:  
     std::string my_addr; 
 
     size_t my_numero_colunas; // Isso impede que dois números de colunas sejam criados
@@ -31,7 +30,6 @@ public:
 
     Utilities(std::string addr, size_t num_colunas):File(addr, num_colunas){
         // Here I'm sure that db file exists.
-        my_file.open(addr);
         my_addr = addr;
         my_numero_colunas = num_colunas;
     };
@@ -39,8 +37,9 @@ public:
 
     std::vector<std::string> read_file(void); 
     void output_from_csv(void); // recebe o número de colunas
-    void print_any(void);
+    void adicionar_ao_arquivo(void);
     void closing_file(std::ifstream& file);
+    void closing_file(std::ofstream& file);
     void closing_file(std::fstream& file);
 
     bool make_menu(void); // create a menu for us
