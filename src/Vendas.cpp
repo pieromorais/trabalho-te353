@@ -68,6 +68,7 @@ bool menu_interno(std::string nome_do_menu, Softwares obj){
         return false;
         break;
     case 2:
+        obj.venda_de_artigos();
         return false;
         break;
     case 3:
@@ -94,6 +95,7 @@ bool menu_interno(std::string nome_do_menu, Pecas obj){
         return false;
         break;
     case 2:
+        obj.venda_de_artigos();
         return false;
         break;
     case 3:
@@ -120,6 +122,7 @@ bool menu_interno(std::string nome_do_menu, Maquinas obj){
         return false;
         break;
     case 2:
+        obj.venda_de_artigos();
         return false;
         break;
     case 3:

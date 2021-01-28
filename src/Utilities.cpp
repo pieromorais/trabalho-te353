@@ -1,7 +1,9 @@
 #include <iostream>
 #include <iomanip> // Permite manipular a saida de dados mais facilmente.
+#include <string>
 #include <sstream>
 #include "Utilities.h"
+
 
 Utilities::~Utilities()
 {
@@ -102,17 +104,136 @@ void Utilities::adicionar_ao_arquivo(void){
      file.close();
 }
 
-void Utilities::closing_file(std::ifstream& file){
-    // to close files.
+void Utilities::venda_de_artigos(void){
+    struct s_tabela
+    {
+        // Struct para receber os valores contidos
+        // nas tabelas csv.
+        // Em tese, vai ficar mais facil manipular 
+        // os dados desse jeito.
+        int id;
+        std::string nome;
+        std::string desc;
+        int qtd;
+        float preco;
+    };
+    
+    size_t contador = 0;
+
+    std::ifstream file(this->my_addr);
+    if (file.is_open())
+    {
+        std::string line;
+        while(std::getline(file, line)){
+            // Quero contar a quantida de linhas
+            // para um termina arquivo csv.
+            // Com o número de linhas eu consigo alocar
+            // a quantidade necessária de memória para
+            // guardar a struct s_tabela.
+            contador++;
+        }       
+    }else{
+        std::cerr << "Deu Ruim ao Abrir o Arquivo!\n";
+    }
+
+    // Eu tenho que alocar (contador - 1) por causa do header
+    // que não me interessa.
+    
+    std::vector<s_tabela> vector_s_tabela;
+
+    // Voltando para o começo do arquivo
+    file.clear();
+    file.seekg(0);
+    
+    // Para tirar o header do arquivo csv
+    std::string line;
+    std::getline(file, line);
+    std::cout << line << "\n";
+    
+    while (std::getline(file, line))
+    {   
+        std::cout << line << "\n";
+        std::string cell;
+        std::stringstream ss(line);
+
+        while(std::getline(ss, cell, ',')){
+            // Como eu estou usando o C++11, as funções
+            // std::stoi e std::stod não funcionam.
+            // referencia -> https://stackoverflow.com/questions/7663709/how-can-i-convert-a-stdstring-to-int
+            s_tabela aux;
+            aux.id = atoi(cell.c_str());
+            std::getline(ss, cell, ',');
+            aux.nome = cell;
+            std::getline(ss, cell, ',');
+            aux.desc = cell;
+            std::getline(ss, cell, ',');
+            aux.qtd = atoi(cell.c_str());
+            std::getline(ss, cell, ',');
+            aux.preco = atof(cell.c_str());
+            vector_s_tabela.push_back(aux);
+        }                   
+                
+        // Por algum motivo ele esta printando tudo na tela
+        // eu não sei pq.
+        // Vou dar clear na tela e seguir em frente, mas seria
+        // bom consertar isso. Não encontrei uma solução fácil
+        // na net.
+    }
+    // Limpando as coisa por aqui.
+    ClearScreen();
     file.close();
+    // Alter os valores no id desejado.
+    int get_id = 0;
+    // Pedir para o user entrar com o id do produto.
+    std::cout << "Entre com o id do produto a ser vendido:";
+    std::cin >> get_id;
+    std::cout << "\n";
+
+    size_t nao_encontrado = 0;
+    for (size_t i = 0; i < (contador - 1); i++)
+    {
+        // Atualiza a quantidade do produto no estoque
+        if(get_id == vector_s_tabela[i].id) vector_s_tabela[i].qtd = vector_s_tabela[i].qtd - 1;
+        else{
+            nao_encontrado++;
+        }
+    }
+    if (nao_encontrado == (contador -1)) {
+        ClearScreen();
+        std::cerr << "Id nao encontrado\n";
+        
+    }
+    else{
+        // Reescrevendo o arquivo csv com as novas informações
+        // Criando um novo arquivo csv vazio
+        std::ofstream clear_file(this->my_addr);
+        clear_file.close();
+        // Abrindo o novo arquivo csv vazio e append.
+        std::ofstream new_file;
+        new_file.open(this->my_addr, std::ios_base::app);
+
+        if(new_file.is_open()){
+            new_file << "id,nome,desc,qtd,preco,\n";
+            for (size_t i = 0; i < (contador - 1); i++)
+            {
+                new_file << vector_s_tabela[i].id << "," << vector_s_tabela[i].nome << "," <<
+                vector_s_tabela[i].desc << "," << vector_s_tabela[i].qtd << "," <<
+                vector_s_tabela[i].preco << "\n";           
+            }        
+        }else{
+            std::cerr << "Erro ao escrever o arquivo\n";
+        }
+        // Fechando o arquivo
+        new_file.close();
+        // Desalocando a mémoria.
+
+        // Lipando a tela
+        ClearScreen();
+    }    
 }
 
-void Utilities::closing_file(std::fstream& file){
-    // to close other files
-    file.close();
+void ClearScreen()
+{
+    std::cout << std::string( 100, '\n' );
 }
 
-void Utilities::closing_file(std::ofstream& file){
-    // to close another files
-    file.close();
-}
