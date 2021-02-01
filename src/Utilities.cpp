@@ -70,6 +70,82 @@ void Utilities::output_from_csv(void){
             counter = 0;
         }                
     }    
+    // Adicionar outro laço for para verificar a
+    // quantidade de produtos no estoque
+    std::cout << "\n\n";
+    
+
+    std::ifstream file(this->my_addr);
+    if(file.is_open())
+    {
+        std::string line;
+        std::getline(file, line);
+
+        std::stringstream ss(line);
+        std::string cell;
+
+        size_t counter = 0;
+        // Quero verificar se as colunas são as que eu quero
+        // caso, contrário quero continuar pq não tem nada que 
+        // eu possa fazer
+
+        while(std::getline(ss, cell, ','))
+        {
+            if(
+                cell == "id" || cell == "nome" || cell == "desc" || cell == "qtd" || cell == "preco"
+            ){ counter++; }
+        }
+        struct sDados
+        {
+            std::string id;
+            std::string nome;
+            int qtd;
+        };
+        std::vector<sDados> dados;
+        if (counter == 5) {
+            
+            sDados aux;
+            while (std::getline(file, line))
+            {
+                std::stringstream sstring(line);
+                std::string catch_cell;
+                
+                // pegar o id
+                std::getline(sstring, catch_cell, ',');
+                aux.id = catch_cell;
+                // pegar o nome
+                std::getline(sstring, catch_cell, ',');
+                aux.nome = catch_cell;
+                // pular desc
+                std::getline(sstring, catch_cell, ',');
+                // pegar qtd e converter para int
+                std::getline(sstring, catch_cell, ',');
+                aux.qtd = atoi(catch_cell.c_str());
+                // só para garantir
+                std::getline(sstring, catch_cell, ',');
+                dados.push_back(aux);
+            }
+            for (
+                std::vector<sDados>::iterator iter = dados.begin();
+                iter != dados.end();
+                iter++)
+                {
+                    if(iter->qtd <=5)
+                    {
+                        std::cout << "* ATENCAO: " << iter->id << " - " << 
+                        iter->nome << ", com estoque baixo: " << iter->qtd <<
+                        " pecas\n";
+                    }
+                }
+                file.close();
+                // Isso vai apenas rodar se counter for igual a 5
+                // caso o contrário vai passar de buenas pq o arquivo
+                // é diferente.
+        }
+
+    }else{std::cerr << "Erro ao abrir um file - Alerta de estoque baixo!\n";}
+    
+    
 }
 
 void Utilities::adicionar_ao_arquivo(void){
