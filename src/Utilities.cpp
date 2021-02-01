@@ -76,6 +76,31 @@ void Utilities::adicionar_ao_arquivo(void){
     // Abrir arquivos e adicionar o que user 
     // quiser - mas será tratado como string
     //this->output_from_csv();
+    struct sHeader
+    {
+        std::vector <std::string> columns;
+    };
+    
+    std::ifstream read_header(this->my_addr);
+    sHeader header;
+    if(read_header.is_open())
+    {
+        std::string line;
+        std::getline(read_header, line);
+
+        std::stringstream ss(line);
+        std::string col;
+
+        
+        while(std::getline(ss, col, ','))
+        {
+            header.columns.push_back(col);
+        }
+        read_header.close();
+    }else{
+        std::cerr << "Deu ruim ao ler o arquivo\n";
+    }
+    
 
     std::ofstream file;
     file.open(this->my_addr, std::ios_base::app);
@@ -85,7 +110,7 @@ void Utilities::adicionar_ao_arquivo(void){
         std::string nome_coluna;
         for (size_t i = 0; i < this->my_numero_colunas; i++)
         {
-            std::cout << "Entre com a coluna " << i << "\n";
+            std::cout << "Entre com a coluna " << header.columns[i] << "\n";
             // só para garantir
             fflush(stdin);
             setbuf(stdin, NULL);
