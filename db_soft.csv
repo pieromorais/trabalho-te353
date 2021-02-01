@@ -1,6 +1,6 @@
 id,nome,desc,qtd,preco,
-1,primeiro,primeiro desc,27,20.12
+1,primeiro,primeiro desc,0,20.12
 2,segundo,segunda desc,41,21.98
 3,terceiro,terceira desc,32,22.87
 4,quarto,quarta desc,44,30.98
-5,quinto,quinta desc,65,78.76,
+5,quinto,quinta desc,65,78.76

@@ -85,13 +85,17 @@ void Utilities::adicionar_ao_arquivo(void){
     sHeader header;
     if(read_header.is_open())
     {
+        // Verificar se o file está aberto
+        // e pegar a primeira linha que é o header
+        // das files db.
         std::string line;
         std::getline(read_header, line);
 
         std::stringstream ss(line);
         std::string col;
 
-        
+        // pegar essa primeira linha e quebra-la
+        // para pegar cada uma das colunas
         while(std::getline(ss, col, ','))
         {
             header.columns.push_back(col);
@@ -218,7 +222,15 @@ void Utilities::venda_de_artigos(void){
     for (size_t i = 0; i < (contador - 1); i++)
     {
         // Atualiza a quantidade do produto no estoque
-        if(get_id == vector_s_tabela[i].id) vector_s_tabela[i].qtd = vector_s_tabela[i].qtd - 1;
+        if(get_id == vector_s_tabela[i].id) {
+            if (vector_s_tabela[i].qtd == 0)
+            {
+                ClearScreen();
+                std::cout << "Sem produto, repor estoque!\n";
+            }else{
+                vector_s_tabela[i].qtd = vector_s_tabela[i].qtd - 1;
+            }
+        }
         else{
             nao_encontrado++;
         }
@@ -253,7 +265,7 @@ void Utilities::venda_de_artigos(void){
         // Desalocando a mémoria.
 
         // Lipando a tela
-        ClearScreen();
+        //ClearScreen();
     }    
 }
 
