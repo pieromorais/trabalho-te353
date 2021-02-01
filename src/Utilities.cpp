@@ -213,9 +213,14 @@ void Utilities::venda_de_artigos(void){
     file.close();
     // Alter os valores no id desejado.
     int get_id = 0;
+    size_t prod_vendidos = 0; // Quantos produtos foram vendidos, para reduzir do estoque.
+    double valor_da_compra = 0;
     // Pedir para o user entrar com o id do produto.
     std::cout << "Entre com o id do produto a ser vendido:";
     std::cin >> get_id;
+    std::cout << "\n";
+    std::cout << "Quantos produtos foram comprados:";
+    std::cin >> prod_vendidos;
     std::cout << "\n";
 
     size_t nao_encontrado = 0;
@@ -228,7 +233,11 @@ void Utilities::venda_de_artigos(void){
                 ClearScreen();
                 std::cout << "Sem produto, repor estoque!\n";
             }else{
-                vector_s_tabela[i].qtd = vector_s_tabela[i].qtd - 1;
+                vector_s_tabela[i].qtd = vector_s_tabela[i].qtd - prod_vendidos;
+                valor_da_compra = prod_vendidos * vector_s_tabela[i].preco;
+                std::cout << vector_s_tabela[i].nome << ": " << prod_vendidos << " vendidos\n";
+                std::cout << "Saldo: " << valor_da_compra << "\n";
+                std::cout << "\n";
             }
         }
         else{
@@ -267,6 +276,124 @@ void Utilities::venda_de_artigos(void){
         // Lipando a tela
         //ClearScreen();
     }    
+}
+
+void Utilities::repor_artigos(void){
+    // Essa função coleta o id do produto que será
+    // reposto, e adiciona a quantidade comprada 
+    // para fazer a reposição.
+    // Ela é bem parecida com a função de vendas
+    // no que tange as suas partes com a manipula-
+    // ção de arquivos.
+    // Eu posso querer também mudar o preço do produto
+    // devido a algum reajuste.
+    struct sRecebeTabela
+    {
+        // struct que recebe os valores da tabela
+        // só funciona pq eu sei o formato das tabelas
+        // em vendas.
+        int id;
+        std::string nome;
+        std::string desc;
+        int qtd;
+        float preco;
+    };
+    // Vector com a quantidade necessária de linha para
+    // conter toda a tabela em formato csv.
+    std::vector <sRecebeTabela> vector_de_linhas_da_tabela;
+
+    std::ifstream ler_file(this->my_addr); 
+    std::string header;
+    if(ler_file.is_open())
+    {
+        std::string line;
+        std::getline(ler_file, line); // Não quero o header
+        header = line;
+        while(std::getline(ler_file, line))
+        {
+            std::stringstream ss(line);
+            std::string cell;
+
+            sRecebeTabela tabela_aux;
+            std::getline(ss, cell, ',');        
+            tabela_aux.id = atoi(cell.c_str());
+            std::getline(ss, cell, ',');
+            tabela_aux.nome = cell;
+            std::getline(ss, cell, ',');
+            tabela_aux.desc = cell;
+            std::getline(ss, cell, ',');
+            tabela_aux.qtd = atoi(cell.c_str());
+            std::getline(ss, cell, ',');
+            tabela_aux.preco = atof(cell.c_str());
+
+            vector_de_linhas_da_tabela.push_back(tabela_aux);        
+        }
+    }else{std::cerr << "Deu ruim ao abri o arquivo!\n";}
+    ler_file.close();
+
+    int get_id = 0;
+    size_t qtd_adicionada = 0;
+    size_t opcao = 0;
+    double novo_preco = 0;
+
+    // Interagir com o usuário
+    std::cout << "Digite o nome do id do produto, cujo o estoque sera reposto:";
+    std::cin >> get_id;
+    std::cout << "\n";
+    std::cout << "Quantos produtos serao adicionados:";
+    std::cin >> qtd_adicionada;
+    std::cout << "\n";
+    std::cout << "Deseja alterar o preco? 1 - Sim\n2 - Para manter o preco antigo\n";
+    std::cin >> opcao;
+    switch (opcao)
+    {
+    case 1:
+        std::cout << "Novo preco:";
+        std::cin >> novo_preco;
+        std::cout << "\n";
+        break;
+    
+    default:
+        break;
+    }
+    size_t counter = 0;
+    for (
+        std::vector<sRecebeTabela>::iterator iter = vector_de_linhas_da_tabela.begin(); 
+        iter != vector_de_linhas_da_tabela.end(); ++iter
+        )
+    {
+        if(iter->id == get_id && opcao == 1)
+        {
+            // faz mudança de preço e adiciona a quatidade 
+            // adicionada pelo usuário
+            iter->qtd += qtd_adicionada;
+            iter->preco = novo_preco;
+        }else if(iter->id == get_id){
+            // Apenas altera a quantidade no estoque
+            iter->qtd += qtd_adicionada;
+        }
+        counter++;
+        if(counter == vector_de_linhas_da_tabela.size()) std::cout << "Id nao encontrado\n";
+    }    
+    // Apenas lcrio um novo arquivo vazio
+    std::ofstream clear_file(this->my_addr);
+    if(clear_file.fail()) std::cerr << "Erro ao criar um novo arquivo - Reposicao!\n";
+    clear_file.close();
+
+    std::ofstream gravar_file(this->my_addr, std::ios_base::app);
+    if(gravar_file.is_open()){
+        gravar_file << header << "\n";
+        for(
+            std::vector<sRecebeTabela>::iterator iter = vector_de_linhas_da_tabela.begin();
+            iter != vector_de_linhas_da_tabela.end();
+            iter++    
+        ){
+            gravar_file << iter->id << "," << iter->nome << "," << iter->desc << "," <<
+            iter->qtd << "," << iter->preco << "," << "\n";
+        }
+    }else {std::cerr << "Erro ao gravar arquivo - Reposicao!\n";}
+    
+    gravar_file.close();
 }
 
 void ClearScreen()

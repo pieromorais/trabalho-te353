@@ -59,7 +59,7 @@ bool menu_interno(std::string nome_do_menu, Softwares obj){
     std::cout << nome_do_menu << "\n";
     size_t opcao = 0;
     std::cout << "1 - Checar Estoque\n2 - Fazer Venda\n3 - Adicionar Produto\n" <<
-    "4 - Voltar\n";
+    "4 - Repor Estoque\n5 - Voltar\n";
     std::cin >> opcao;
     switch (opcao)
     {
@@ -73,6 +73,10 @@ bool menu_interno(std::string nome_do_menu, Softwares obj){
         break;
     case 3:
         obj.adicionar_ao_arquivo();
+        return false;
+        break;
+    case 4:
+        obj.repor_artigos();
         return false;
         break;
     default:
@@ -86,7 +90,7 @@ bool menu_interno(std::string nome_do_menu, Pecas obj){
     std::cout << nome_do_menu << "\n";
     size_t opcao = 0;
     std::cout << "1 - Checar Estoque\n2 - Fazer Venda\n3 - Adicionar Produto\n" <<
-    "4 - Voltar\n";
+    "4 - Repor Estoque\n5 - Voltar\n";
     std::cin >> opcao;
     switch (opcao)
     {
@@ -100,6 +104,10 @@ bool menu_interno(std::string nome_do_menu, Pecas obj){
         break;
     case 3:
         obj.adicionar_ao_arquivo();
+        return false;
+        break;
+    case 4:
+        obj.repor_artigos();
         return false;
         break;
     default:
@@ -113,7 +121,7 @@ bool menu_interno(std::string nome_do_menu, Maquinas obj){
     std::cout << nome_do_menu << "\n";
     size_t opcao = 0;
     std::cout << "1 - Checar Estoque\n2 - Fazer Venda\n3 - Adicionar Produto\n" <<
-    "4 - Voltar\n";
+    "4 - Repor Estoque\n5 - Voltar\n";
     std::cin >> opcao;
     switch (opcao)
     {
@@ -127,6 +135,10 @@ bool menu_interno(std::string nome_do_menu, Maquinas obj){
         break;
     case 3:
         obj.adicionar_ao_arquivo();
+        return false;
+        break;
+    case 4:
+        obj.repor_artigos();
         return false;
         break;
     default:

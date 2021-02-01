@@ -40,6 +40,7 @@ public:
     void output_from_csv(void);
     void adicionar_ao_arquivo(void);
     void venda_de_artigos(void);
+    void repor_artigos(void);
 
 };
 
